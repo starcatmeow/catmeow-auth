@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openid
+data:
+  production.yml: |
+    LISTEN_ADDR: 0.0.0.0
+    LISTEN_PORT: 80
+    UNDER_PROXY: true
+    MONGO_HOST: 'mongo:27017'
+    USERCENTER_FRONTEND_URL: 'https://usercenter.starcatmeow.cn'
+    USERCENTER_BACKEND_URL: 'https://usercenter.starcatmeow.cn/api'

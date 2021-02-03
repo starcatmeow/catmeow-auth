@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openid-deployment
+spec:
+  selector:
+    matchLabels:
+      app: openid
+  template:
+    metadata:
+      labels:
+        app: openid
+    spec:
+      containers:
+      - name: openid
+        image: registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/openid:openid-k8s-test
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: config
+          mountPath: '/app/config'
+          readOnly: true
+        env:
+        - name: MONGO_USER
+          valueFrom:
+            secretKeyRef:
+              name: mongo-credential
+              key: username
+        - name: MONGO_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongo-credential
+              key: password
+      volumes:
+      - name: config
+        configMap:
+          name: openid
