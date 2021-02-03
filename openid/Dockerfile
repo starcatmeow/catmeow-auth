@@ -6,8 +6,8 @@ COPY package.json ./
 COPY yarn.lock ./
 RUN yarn install --prod
 
-COPY config ./
+COPY config ./config
 COPY generate-keys.js ./
-COPY dist ./
+COPY dist ./dist
 
 CMD ["node", "dist/server.js"]
