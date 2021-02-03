@@ -10,3 +10,19 @@ build_usercenter_frontend:
     paths:
       - usercenter_frontend/dist
     expire_in: 30 days
+
+pack_usercenter_frontend:
+  before_script:
+    - cd $CI_PROJECT_DIR/usercenter_frontend
+  stage: pack
+  needs:
+    - build_usercenter_frontend
+  image:
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $CI_PROJECT_DIR/usercenter_frontend --dockerfile $CI_PROJECT_DIR/usercenter_frontend/Dockerfile --destination $CI_REGISTRY_IMAGE/usercenter-frontend:$CI_COMMIT_TAG
+  rules:
+    - if: $CI_COMMIT_TAG
