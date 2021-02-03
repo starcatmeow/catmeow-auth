@@ -1,3 +1,6 @@
+before_script:
+  - cd $CI_PROJECT_DIR/usercenter_frontend
+
 stages:
   - build
 
@@ -9,5 +12,5 @@ build_usercenter_frontend:
     - NODE_ENV=production yarn build
   artifacts:
     paths:
-      - dist
+      - usercenter_frontend/dist
     expire_in: 30 days

@@ -1,3 +1,6 @@
+before_script:
+  - cd $CI_PROJECT_DIR/usercenter_backend
+
 stages:
   - build
   - pack
@@ -10,7 +13,7 @@ build_usercenter_backend:
     - gulp build
   artifacts:
     paths:
-      - dist
+      - usercenter_backend/dist
     expire_in: 30 days
 
 pack_usercenter_backend:

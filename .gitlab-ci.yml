@@ -1,26 +1,7 @@
 stages:
-  - triggers
-
-trigger_openid:
-  stage: triggers
-  trigger:
-    include: openid/.gitlab-ci.yml
-  rules:
-    - changes:
-      - openid/*
-
-trigger_usercenter_backend:
-  stage: triggers
-  trigger:
-    include: usercenter_backend/.gitlab-ci.yml
-  rules:
-    - changes:
-      - usercenter_backend/*
-
-trigger_usercenter_frontend:
-  stage: triggers
-  trigger:
-    include: usercenter_frontend/.gitlab-ci.yml
-  rules:
-    - changes:
-      - usercenter_frontend/*
+  - build
+  - pack
+include: 
+  - local: openid/.gitlab-ci.yml
+  - local: usercenter_backend/.gitlab-ci.yml
+  - local: usercenter_frontend/.gitlab-ci.yml
