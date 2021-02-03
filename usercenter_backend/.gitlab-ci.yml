@@ -5,7 +5,7 @@ build_usercenter_backend:
   image: node:14
   script:
     - yarn install
-    - gulp build
+    - npx gulp build
   artifacts:
     paths:
       - usercenter_backend/dist
