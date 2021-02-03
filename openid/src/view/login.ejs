@@ -1,0 +1,20 @@
+<div class="title">Catmeow 登录</div>
+<form action="/interaction/<%= uid %>/login" method="post">
+    <input type="hidden" name="prompt" value="login"/>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label maxwidth">
+        <input class="mdl-textfield__input" type="text" id="login" name="login" <% if (typeof hint === 'undefined') { %>autofocus<% } else { %> value="<%= hint %>" <% } %>>
+        <label class="mdl-textfield__label" for="login">用户名/邮箱</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label maxwidth">
+        <input class="mdl-textfield__input" type="password" id="pass" name="password" <% if (typeof hint !== 'undefined') { %>autofocus<% } %>>
+        <label class="mdl-textfield__label" for="pass">密码</label>
+    </div>
+    <div class="center">
+        <a href="/interaction/<%= uid %>/abort" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="margin-right:10px;">
+            <i class="material-icons">exit_to_app</i>
+        </a>
+        <button type="submit" class="blue mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+            <i class="material-icons">arrow_forward</i>
+        </button>
+    </div>
+</form>

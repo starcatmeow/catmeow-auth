@@ -1,0 +1,20 @@
+listen_addr: '0.0.0.0'
+listen_port: 3001
+# frontendurl: ''
+# mongouri: ''
+# auth:
+#   oidcurl: ''
+#   client_id: ''
+#   client_secret: ''
+# jwt:
+#   tokenkey: ''
+#   tokenexpire: ''
+#   challengekey: ''
+# sitename: ''
+# email: 
+#   host: ''
+#   port: 465
+#   secure: true
+#   auth:
+#     user: ''
+#     pass: ''

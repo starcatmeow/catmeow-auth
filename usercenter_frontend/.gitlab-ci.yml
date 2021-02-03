@@ -1,0 +1,13 @@
+stages:
+  - build
+
+build_usercenter_frontend:
+  stage: build
+  image: node:14
+  script:
+    - yarn install
+    - NODE_ENV=production yarn build
+  artifacts:
+    paths:
+      - dist
+    expire_in: 30 days
