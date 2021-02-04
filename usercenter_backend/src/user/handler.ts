@@ -8,6 +8,7 @@ import bcrypt from 'bcrypt'
 import * as nodemailer from 'nodemailer'
 import Config from '../config'
 import { Client } from '../model/client'
+import { UserCenterAdmin } from '../model/usercenteradmin'
 export const logHandler = async (req: Request, h: hapi.ResponseToolkit): Promise<Response> => {
     let count = 0
     if(req.query.page == 1){
@@ -77,6 +78,13 @@ export const registerHandler = async (req: Request, h: hapi.ResponseToolkit): Pr
             statusCode: "400",
             error: "DUPLICATE_USER"
         }
+    }
+    const adminCount = await UserCenterAdmin.countDocuments().exec()
+    if(adminCount == 0){
+        await new UserCenterAdmin({
+            accountId: user.id
+        }).save()
+        console.log(payload.email+'('+user.id+') become the admin.(the 1st register)')
     }
     const challengeToken = jwt.sign({
         uid: user.id,

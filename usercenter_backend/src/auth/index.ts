@@ -36,7 +36,7 @@ export const authInit = async (server: hapi.Server) => {
                 client_id: Config.auth.client_id,
                 client_secret: Config.auth.client_secret,
                 redirect_uris: [
-                    redirectUrl
+                    Config.frontendurl + '/auth/callback'
                 ],
                 response_types: ['code'],
                 grant_types: ['authorization_code'],

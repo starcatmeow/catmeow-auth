@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: usercenter-frontend
-        image: registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/usercenter-frontend:final-k8s-test
+        image: registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/usercenter-frontend:0.1-alpha
         imagePullPolicy: "Always"
         resources:
           limits:

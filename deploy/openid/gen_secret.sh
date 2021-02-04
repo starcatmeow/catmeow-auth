@@ -1,6 +1,6 @@
 #!/bin/sh
 mkdir temp_secret
-docker run --rm -it -v "$PWD/temp_secret:/app/secret" registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/openid:full-k8s-test yarn genkey
+docker run --rm -it -v "$PWD/temp_secret:/app/secret" registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/openid:0.1-alpha yarn genkey
 cat > generated_secret.yaml << EOF
 apiVersion: v1
 kind: Secret
