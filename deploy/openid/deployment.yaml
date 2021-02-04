@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: openid
-        image: registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/openid:full-k8s-test
+        image: registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/openid:final-k8s-test
         resources:
           limits:
             memory: "128Mi"

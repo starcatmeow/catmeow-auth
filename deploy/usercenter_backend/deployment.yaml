@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: usercenter-backend
-        image: registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/usercenter-backend:full-k8s-test
+        image: registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/usercenter-backend:final-k8s-test
         resources:
           limits:
             memory: "128Mi"

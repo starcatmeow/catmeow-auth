@@ -13,7 +13,8 @@ spec:
     spec:
       containers:
       - name: usercenter-frontend
-        image: registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/usercenter-frontend:full-k8s-test
+        image: registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/usercenter-frontend:final-k8s-test
+        imagePullPolicy: "Always"
         resources:
           limits:
             memory: "128Mi"
