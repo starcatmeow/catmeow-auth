@@ -13,7 +13,6 @@ spec:
       labels:
         app: mongo
     spec:
-      hostname: mongo
       containers:
       - name: mongo
         image: mongo
@@ -28,11 +27,3 @@ spec:
             secretKeyRef:
               name: mongo-credential
               key: password
-  volumeClaimTemplates:
-  - metadata:
-      name: www
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 1Gi

@@ -1,16 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: openid
+  name: usercenter-frontend
   labels:
-      name: openid
+      name: usercenter-frontend
 spec:
   rules:
-  - host: openid.starcatmeow.cn
+  - host: usercenter.starcatmeow.cn
     http:
       paths:
       - pathType: Prefix
         path: "/"
         backend:
-          serviceName: openid
+          serviceName: frontend
           servicePort: 80

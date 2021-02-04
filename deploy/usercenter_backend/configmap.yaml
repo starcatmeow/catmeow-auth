@@ -1,15 +1,17 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: configmap.openid.starcatmeow.cn
+  name: configmap.backend.usercenter.starcatmeow.cn
 data:
   production.yml: |
     listen_addr: 0.0.0.0
     listen_port: 80
-    under_proxy: true
-    usercenter:
-      frontend: https://usercenter.starcatmeow.cn
-      backend: https://usercenter.starcatmeow.cn/api
+    frontendurl: 'https://usercenter.starcatmeow.cn'
+    auth:
+      oidcurl: 'https://openid.starcatmeow.cn'
+    jwt:
+      tokenexpire: '1h'
+    sitename: 'Catmeow 用户中心'
   custom-environment-variables.yml: |
     mongo:
       host: MONGO_HOST

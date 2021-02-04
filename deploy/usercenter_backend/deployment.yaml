@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: openid
+  name: usercenter-backend
 spec:
   selector:
     matchLabels:
-      app: openid
+      app: usercenter-backend
   template:
     metadata:
       labels:
-        app: openid
+        app: usercenter-backend
     spec:
       containers:
-      - name: openid
-        image: registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/openid:full-k8s-test
+      - name: usercenter-backend
+        image: registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/usercenter-backend:full-k8s-test
         resources:
           limits:
             memory: "128Mi"
@@ -24,7 +24,7 @@ spec:
           readOnly: true
         - name: secretkey
           mountPath: '/app/secret'
-          readOnly: false
+          readOnly: true
         env:
         - name: MONGO_USER
           valueFrom:
@@ -38,11 +38,14 @@ spec:
               key: password
         - name: MONGO_HOST
           value: mongo
+        - name: NODE_CONFIG_DIR
+          value: /app/config:/app/secret
       volumes:
       - name: config
         configMap:
-          name: configmap.openid.starcatmeow.cn
+          name: configmap.backend.usercenter.starcatmeow.cn
       - name: secretkey
         secret:
-          secretName: secretkeys.openid.starcatmeow.cn
+          secretName: secretkeys.backend.usercenter.starcatmeow.cn
           defaultMode: 256
+
