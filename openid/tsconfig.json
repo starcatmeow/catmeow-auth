@@ -2,9 +2,10 @@
     "extends": "@tsconfig/recommended/tsconfig.json",
 
     "compilerOptions": {
+        "target": "es2017",
         "outDir": "./dist"
     },
 
-    "include": ["src/**/*", "generate-keys.js"],
+    "include": ["src/**/*"],
     "exclude": ["node_modules"]
 }

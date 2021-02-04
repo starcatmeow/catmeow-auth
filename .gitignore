@@ -119,5 +119,4 @@ dist
 .DS_Store
 
 */config/development.yml
-*/config/jwks.json
-*/config/cookiekeys.json
+*/secret/

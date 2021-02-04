@@ -22,6 +22,9 @@ spec:
         - name: config
           mountPath: '/app/config'
           readOnly: true
+        - name: secretkey
+          mountPath: '/app/secret'
+          readOnly: false
         env:
         - name: MONGO_USER
           valueFrom:
@@ -37,3 +40,7 @@ spec:
       - name: config
         configMap:
           name: openid
+      - name: secretkey
+        secret:
+          secretName: usercenter_backend_secret_keys
+          defaultMode: 384

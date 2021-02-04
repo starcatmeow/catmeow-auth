@@ -1,6 +1,10 @@
-LISTEN_ADDR: 0.0.0.0
-LISTEN_PORT: 3000
-# UNDER_PROXY: false
-# MONGO_HOST: ''
-# USERCENTER_FRONTEND_URL: ''
-# USERCENTER_BACKEND_URL: ''
+listen_addr: 'localhost'
+listen_port: '3000'
+# under_proxy: false
+# mongo: 
+#   host: ''
+#   user: ''
+#   password: ''
+# usercenter: 
+#   frontend: ''
+#   backend: ''

@@ -75,7 +75,7 @@ export const loginHandler = async (req: hapi.Request, h: hapi.ResponseToolkit) =
             prompt: 'login',
             message: '邮箱未验证',
             btn_name: '重新发送验证邮件',
-            btn_url: Config.USERCENTER_BACKEND_URL+'/user/emailverify?uid='+result.account,
+            btn_url: Config.usercenter.backend+'/user/emailverify?uid='+result.account,
             successmsg: '发送成功',
             failmsg: '发送失败，详情查看控制台',
             hint: loginPayload.login

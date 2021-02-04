@@ -1,7 +1,7 @@
 listen_addr: '0.0.0.0'
 listen_port: 3001
 # frontendurl: ''
-# mongouri: ''
+# mongohost: ''
 # auth:
 #   oidcurl: ''
 #   client_id: ''

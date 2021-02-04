@@ -5,15 +5,19 @@ import { MongoAdapter } from './adapter/oidc/mongo_adapter'
 import { findAccount } from './auth'
 import Config from './config'
 import { logAccess } from './log'
+import * as childProcess from 'child_process'
 let jwks: any
 let cookiekeys: any
-// try {
-    jwks = require('../config/jwks.json')
-    cookiekeys = require('../config/cookiekeys.json')   
-// }catch{
-//     console.error('UNABLE TO IMPORT KEYS!')
-//     exit(1)
-// }
+try {
+    jwks = require('../secret/jwks.json')
+    cookiekeys = require('../secret/cookiekeys.json')
+    console.log('Successfully import keys')
+}catch{
+    console.error('Keys not exist, generate now...')
+    childProcess.execSync("yarn genkey")
+    jwks = require('../secret/jwks.json')
+    cookiekeys = require('../secret/cookiekeys.json')
+}
 const configuration: Configuration = {
     adapter: MongoAdapter,
     findAccount: findAccount,
@@ -52,7 +56,7 @@ const configuration: Configuration = {
 }
 
 const oidc = new Provider('http://localhost:3000', configuration);
-oidc.proxy = Config.UNDER_PROXY
+oidc.proxy = Config.under_proxy
 
 oidc.on('authorization_code.consumed', logAccess)
 

@@ -8,7 +8,7 @@ import Config from './config'
 import { authInit } from './auth'
 
 const init = async () => {
-    mongoose.connect(Config.mongouri+'/auth', {
+    mongoose.connect('mongodb://'+Config.mongo.user+':'+Config.mongo.password+'@'+Config.mongo.host+'/auth', {
         authSource: 'admin',
         useNewUrlParser: true,
         useUnifiedTopology: true,

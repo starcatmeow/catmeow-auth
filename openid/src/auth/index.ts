@@ -41,7 +41,7 @@ export const interactionRoutes: hapi.ServerRoute[] = [
         options: {
             cors: {
                 origin: [
-                    Config.USERCENTER_FRONTEND_URL
+                    Config.usercenter.frontend
                 ]
             },
             validate: {

@@ -1,29 +1,38 @@
 import config from 'config'
 import { exit } from 'process';
 let Config = {
-    LISTEN_ADDR: '',
-    LISTEN_PORT: '',
-    UNDER_PROXY: false,
-    MONGO_HOST: '',
-    MONGO_USER: '',
-    MONGO_PASSWORD: '',
-    USERCENTER_FRONTEND_URL: '',
-    USERCENTER_BACKEND_URL: '',
-    MONGO_URI: ''
+    listen_addr: '',
+    listen_port: '',
+    under_proxy: false,
+    mongo: {
+        host: '',
+        user: '',
+        password: ''
+    },
+    usercenter: {
+        frontend: '',
+        backend: ''
+    }
 };
+const dfsLoadConfig = (prefix: string[], configobj: any) => {
+    for (const key of Object.keys(configobj)) {
+        if (typeof configobj[key] == 'object') {
+            dfsLoadConfig(prefix.concat(key), configobj[key])
+        } else if (typeof configobj[key] == 'number') {
+            configobj[key] = Number(config.get(prefix.concat(key).join('.')))
+        } else if (typeof configobj[key] == 'boolean') {
+            configobj[key] = Boolean(config.get(prefix.concat(key).join('.')))
+        } else if (typeof configobj[key] == 'string') {
+            configobj[key] = config.get(prefix.concat(key).join('.'))
+        }
+    }
+}
 export const loadConfig = () => {
     try {
-        Config.LISTEN_ADDR = config.get('LISTEN_ADDR')
-        Config.LISTEN_PORT = config.get('LISTEN_PORT')
-        Config.UNDER_PROXY = Boolean(config.get('UNDER_PROXY'))
-        Config.MONGO_HOST = config.get('MONGO_HOST')
-        Config.USERCENTER_FRONTEND_URL = config.get('USERCENTER_FRONTEND_URL')
-        Config.USERCENTER_BACKEND_URL = config.get('USERCENTER_BACKEND_URL')
-        Config.MONGO_USER = process.env.MONGO_USER!
-        Config.MONGO_PASSWORD = process.env.MONGO_PASSWORD!
-        Config.MONGO_URI = 'mongodb://'+Config.MONGO_USER+':'+Config.MONGO_PASSWORD+'@'+Config.MONGO_HOST
-    } catch {
+        dfsLoadConfig([], Config)
+    } catch (err) {
         console.error('UNABLE TO LOAD CONFIG!')
+        console.error(err)
         exit(1)
     }
 }

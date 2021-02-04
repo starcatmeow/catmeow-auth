@@ -6,7 +6,7 @@ export class Mongo {
     static client: MongoClient;
     static db: Db;
     static async setup(): Promise<any> {
-        Mongo.client = await MongoClient.connect(Config.MONGO_URI, {
+        Mongo.client = await MongoClient.connect('mongodb://'+Config.mongo.user+':'+Config.mongo.password+'@'+Config.mongo.host, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });

@@ -12,7 +12,7 @@ import Config from './config'
 
 const init = async () => {
     MongoAdapter.setup()
-    mongoose.connect(Config.MONGO_URI+'/auth', {
+    mongoose.connect('mongodb://'+Config.mongo.user+':'+Config.mongo.password+'@'+Config.mongo.host+'/auth', {
         authSource: 'admin',
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -20,8 +20,8 @@ const init = async () => {
         useCreateIndex: true
     });
     const server = new hapi.Server({
-        port: Config.LISTEN_PORT,
-        host: Config.LISTEN_ADDR
+        port: Config.listen_port,
+        host: Config.listen_addr
     });
     await server.register(vision);
     await server.register(error);

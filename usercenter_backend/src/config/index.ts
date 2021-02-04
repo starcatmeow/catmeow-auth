@@ -5,7 +5,11 @@ const Config = {
     listen_addr: '',
     listen_port: 0,
     frontendurl: '',
-    mongouri: '',
+    mongo: {
+        host: '',
+        user: '',
+        password: ''
+    },
     auth: {
         oidcurl: '',
         client_id: '',
@@ -51,10 +55,12 @@ export const loadConfig = () => {
 }
 export const loadInitConfig = () => {
     try {
-        Config.mongouri = config.get('mongouri')
+        Config.mongo.host = config.get('mongo.host')
+        Config.mongo.user = config.get('mongo.user')
+        Config.mongo.password = config.get('mongo.password')
         Config.sitename = config.get('sitename')
     } catch (err) {
-        console.error('UNABLE TO LOAD MONGOURI & SITENAME!')
+        console.error('UNABLE TO LOAD MONGOHOST & SITENAME!')
         console.error(err)
         exit(1)
     }
