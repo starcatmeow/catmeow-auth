@@ -5,7 +5,7 @@ import Config from '../config'
 import { JWTUser } from '../model/jwtuser';
 import { Request } from '../model/request'
 import { UserCenterAdmin } from '../model/usercenteradmin';
-import { loginCallback, loginRedirect } from './handler'
+import { loginCallback, loginRedirect, logoutRedirect } from './handler'
 import * as jwt from 'hapi-auth-jwt2'
 import { exit } from 'process';
 import { Client } from '../model/client';
@@ -14,6 +14,7 @@ export let authUrl: string;
 export let tokenUrl: string;
 export let userInfoUrl: string;
 export let redirectUrl: string;
+export let logoutUrl: string;
 
 export const authInit = async (server: hapi.Server) => {
     axios.get(Config.auth.oidcurl + '/.well-known/openid-configuration')
@@ -21,7 +22,8 @@ export const authInit = async (server: hapi.Server) => {
         authUrl = res.data.authorization_endpoint;
         tokenUrl = res.data.token_endpoint;
         userInfoUrl = res.data.userinfo_endpoint;
-        redirectUrl = Config.frontendurl + '/auth/callback'
+        redirectUrl = Config.frontendurl + '/auth/callback';
+        logoutUrl = res.data.end_session_endpoint;
     })
     .catch(() => {
         console.error('OPENID COMPONENT OFFLINE!')
@@ -101,5 +103,10 @@ export const authRoute: hapi.ServerRoute[] = [
         method: 'GET',
         path: '/auth/login',
         handler: loginRedirect
+    },
+    {
+        method: 'GET',
+        path: '/auth/logout',
+        handler: logoutRedirect
     }
 ]

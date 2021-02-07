@@ -10,6 +10,12 @@ module.exports = {
       }
     }
   },
+  pages: {
+    index: {
+      entry: 'src/main.js',
+      title: 'Catmeow 用户中心'
+    }
+  },
   "transpileDependencies": [
     "vuetify"
   ]

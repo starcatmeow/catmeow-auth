@@ -14,6 +14,14 @@
                注册账户
            </v-btn>
         </v-card-actions>
+        <v-overlay
+            absolute
+            :value="loading"
+        >
+            <v-progress-circular indeterminate
+                color="indigo"
+                size="50" />
+        </v-overlay>
     </v-card>
 </template>
 
@@ -37,12 +45,18 @@ export default Vue.extend({
             router.push('/auth/register').catch(()=>{})
         }
     },
+    data(){
+        return {
+            loading: false
+        }
+    },
     mounted: function() {
         if(isAuthenticated()){
             router.push('/user/profile').catch(()=>{})
             return
         }
         if(this.code == null) return
+        this.loading = true
         axios.get('/auth/callback?code='+this.code)
         .then(res => {
             if(res.data.statusCode != "200"){
@@ -66,6 +80,7 @@ export default Vue.extend({
             localStorage.setItem('admin', 'false')
         })
         .then(() => {
+            this.loading = false
             router.push('/user/profile').catch(()=>{})
         })
     }

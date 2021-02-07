@@ -4,7 +4,7 @@ build_openid:
   stage: build
   image: node:14
   script:
-    - yarn install
+    - yarn install --cache-folder .yarn
     - npx gulp build copyejs
   artifacts:
     paths:
@@ -23,6 +23,6 @@ pack_openid:
   script:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR/openid --dockerfile $CI_PROJECT_DIR/openid/Dockerfile --destination $CI_REGISTRY_IMAGE/openid:$CI_COMMIT_TAG
+    - /kaniko/executor --context $CI_PROJECT_DIR/openid --dockerfile $CI_PROJECT_DIR/openid/Dockerfile --destination $CI_REGISTRY_IMAGE/openid:$CI_COMMIT_TAG --cache=true
   rules:
     - if: $CI_COMMIT_TAG

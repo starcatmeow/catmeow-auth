@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usercenter-frontend
+spec:
+  selector:
+    matchLabels:
+      app: usercenter-frontend
+  template:
+    metadata:
+      labels:
+        app: usercenter-frontend
+    spec:
+      containers:
+        - name: usercenter-frontend
+          image: registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/usercenter-frontend:$CI_COMMIT_TAG
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: usercenter-frontend
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: usercenter-frontend
+  labels:
+    name: usercenter-frontend
+spec:
+  rules:
+    - host: usercenter.starcatmeow.cn
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              serviceName: frontend
+              servicePort: 80

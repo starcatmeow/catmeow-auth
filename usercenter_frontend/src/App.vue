@@ -47,6 +47,7 @@
 </style>
 
 <script>
+import config from './config';
 import router from "./router";
 export default {
   data() {
@@ -106,7 +107,7 @@ export default {
   methods: {
     logout: () => {
       localStorage.removeItem("token");
-      router.push("/auth/login");
+      window.location.href = config.backendURL + '/auth/logout'
     },
     navBarIconClick: function () {
       if (this.navBarIcon === "mdi-menu") {

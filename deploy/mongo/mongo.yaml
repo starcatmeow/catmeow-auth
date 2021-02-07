@@ -1,0 +1,143 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mongo
+  namespace: catmeow-auth
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: read-pod-service-endpoint
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - services
+      - endpoints
+      - namespaces
+    verbs:
+      - get
+      - list
+      - watch
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: system:serviceaccount:catmeow-auth:mongo
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: read-pod-service-endpoint
+subjects:
+  - kind: ServiceAccount
+    name: mongo
+    namespace: catmeow-auth
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  labels:
+    name: mongo
+spec:
+  ports:
+    - port: 27017
+      targetPort: 27017
+  clusterIP: None
+  selector:
+    app: mongo
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongo
+spec:
+  serviceName: "mongo"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      securityContext:
+        fsGroup: 999
+      serviceAccountName: mongo
+      automountServiceAccountToken: true
+      terminationGracePeriodSeconds: 30
+      initContainers:
+        - name: fix-permissions
+          image: jonathanrrogers/secret-syncer
+          args: ["-u999", "-g999", "-n0", "/etc/keyfile-raw", "/etc/keyfile"]
+          volumeMounts:
+            - name: mongo-cluster-secret
+              mountPath: /etc/keyfile
+            - name: mongo-cluster-secret-raw
+              mountPath: /etc/keyfile-raw
+      containers:
+        - name: mongo
+          image: mongo:4
+          args:
+            - "--replSet=rs0"
+            - "--bind_ip=0.0.0.0"
+            - "--clusterAuthMode"
+            - "keyFile"
+            - "--keyFile"
+            - "/secret/keyfile"
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data/db
+            - name: mongo-cluster-secret
+              mountPath: "/secret/keyfile"
+              subPath: "keyfile"
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credential
+                  key: username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credential
+                  key: password
+        - name: mongo-sidecar
+          image: morphy/k8s-mongo-sidecar
+          env:
+            - name: KUBERNETES_POD_LABELS
+              value: "app=mongo"
+            - name: KUBERNETES_SERVICE_NAME
+              value: "mongo"
+            - name: KUBERNETES_NAMESPACE
+              value: "catmeow-auth"
+            - name: MONGO_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credential
+                  key: username
+            - name: MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credential
+                  key: password
+      volumes:
+        - name: mongo-cluster-secret
+          emptyDir: {}
+        - name: mongo-cluster-secret-raw
+          secret:
+            defaultMode: 256
+            secretName: mongo-cluster-secret
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-persistent-storage
+      spec:
+        storageClassName: "local-path"
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 2Gi

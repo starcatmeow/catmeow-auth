@@ -2,7 +2,7 @@ import * as hapi from '@hapi/hapi'
 import axios from 'axios'
 import Config from '../config'
 import { Response } from '../model/response'
-import { authUrl, redirectUrl, tokenUrl, userInfoUrl } from './'
+import { authUrl, logoutUrl, redirectUrl, tokenUrl, userInfoUrl } from './'
 import * as jwt from 'jsonwebtoken'
 
 export const loginRedirect = async (req: hapi.Request, h: hapi.ResponseToolkit) => {
@@ -11,6 +11,9 @@ export const loginRedirect = async (req: hapi.Request, h: hapi.ResponseToolkit) 
         + '&response_type=code'
         + '&scope=openid profile email'
         + '&redirect_uri=' + redirectUrl);
+}
+export const logoutRedirect = async (req: hapi.Request, h: hapi.ResponseToolkit) => {
+    return h.redirect(logoutUrl)
 }
 export const loginCallback = async (req: hapi.Request, h: hapi.ResponseToolkit): Promise<Response> => {
     let code: string = req.query.code

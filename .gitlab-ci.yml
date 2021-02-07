@@ -1,7 +1,33 @@
 stages:
   - build
   - pack
+  - deploy
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .yarn
+
 include: 
   - local: openid/.gitlab-ci.yml
   - local: usercenter_backend/.gitlab-ci.yml
   - local: usercenter_frontend/.gitlab-ci.yml
+
+deploy:
+  image: cnych/kubectl
+  stage: deploy
+  needs:
+    - pack_openid
+    - pack_usercenter_backend
+    - pack_usercenter_frontend
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - cd deploy/
+    - chmod +x replace_ver.sh
+    - ./replace_ver.sh
+    - chmod +x patch_all.sh
+    - ./patch_all.sh
+    - kubectl rollout status -n catmeow-auth -f openid/openid.yaml
+    - kubectl rollout status -n catmeow-auth -f usercenter_backend/backend.yaml
+    - kubectl rollout status -n catmeow-auth -f usercenter_frontend/frontend.yaml
