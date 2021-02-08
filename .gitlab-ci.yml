@@ -28,12 +28,8 @@ deploy:
     kubernetes:
       namespace: catmeow-auth
   script:
-    - kubectl cluster-info
     - cd deploy/
     - chmod +x replace_ver.sh
     - ./replace_ver.sh
     - chmod +x patch_all.sh
     - ./patch_all.sh
-    - kubectl rollout status -n catmeow-auth -f openid/openid.yaml
-    - kubectl rollout status -n catmeow-auth -f usercenter_backend/backend.yaml
-    - kubectl rollout status -n catmeow-auth -f usercenter_frontend/frontend.yaml

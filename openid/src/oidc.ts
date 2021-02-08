@@ -6,6 +6,7 @@ import { findAccount } from './auth'
 import Config from './config'
 import { logAccess } from './log'
 import * as childProcess from 'child_process'
+import { logoutSource, postLogoutSuccessSource } from './auth/logout'
 let jwks: any
 let cookiekeys: any
 try {
@@ -45,6 +46,8 @@ const configuration: Configuration = {
         }
     },
     jwks,
+    logoutSource,
+    postLogoutSuccessSource,
     renderError: async function (ctx, out, error) {
         ctx.body = await ejs.renderFile(__dirname+'/view/render_error.ejs',{
             statusCode: 400,
