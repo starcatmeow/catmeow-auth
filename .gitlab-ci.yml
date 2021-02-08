@@ -22,6 +22,11 @@ deploy:
     - pack_usercenter_frontend
   rules:
     - if: $CI_COMMIT_TAG
+  environment:
+    name: production
+    url: https://usercenter.starcatmeow.cn
+    kubernetes:
+      namespace: catmeow-auth
   script:
     - kubectl cluster-info
     - cd deploy/
