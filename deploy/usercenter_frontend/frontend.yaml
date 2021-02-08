@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: usercenter-frontend
-          image: registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/usercenter-frontend:$CI_COMMIT_TAG
+          image: registry.starcatmeow.cn/catmeow/catmeow-auth-service/usercenter-frontend:$CI_COMMIT_TAG
           imagePullPolicy: Always
           resources:
             limits:

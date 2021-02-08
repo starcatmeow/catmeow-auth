@@ -47,7 +47,7 @@ spec:
             - "-lapp=mongo"
       containers:
         - name: openid
-          image: registry.starcatmeow.cn/dongruixuan/catmeow-auth-service/openid:$CI_COMMIT_TAG
+          image: registry.starcatmeow.cn/catmeow/catmeow-auth-service/openid:$CI_COMMIT_TAG
           imagePullPolicy: Always
           resources:
             limits:
