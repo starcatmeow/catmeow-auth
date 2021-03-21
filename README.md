@@ -1,4 +1,6 @@
 # Catmeow Auth Service
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fstarcatmeow%2Fcatmeow-auth.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fstarcatmeow%2Fcatmeow-auth?ref=badge_shield)
+
 
 这是一个 Typescript + Kubernetes 测试项目，其实现了最基本的 OpenID Connect 协议，并提供了一个简单的用户中心/管理页面。
 
@@ -24,3 +26,6 @@
 ## 演示站点
 
 [点此进入](https://usercenter.starcatmeow.cn/)
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fstarcatmeow%2Fcatmeow-auth.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fstarcatmeow%2Fcatmeow-auth?ref=badge_large)
