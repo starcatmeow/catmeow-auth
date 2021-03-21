@@ -78,7 +78,7 @@ export default {
         {
           groupid: "admin",
           groupname: "管理",
-          enabled: true,
+          enabled: false,
           entrys: [
             {
               name: "用户列表",
