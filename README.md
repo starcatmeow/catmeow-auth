@@ -8,10 +8,10 @@
 
 ![user center home page](https://i.imgur.com/UQQzTX7.png)
 ![user register page](https://i.imgur.com/C5qjU15.png)
-![user login page](https://i.imgur.com/tTQSC4L.png)
+![user login page](https://i.imgur.com/jAenXsc.png)
 ![user authorize page](https://i.imgur.com/FaKIrzX.png)
-![user profile page](https://i.imgur.com/L7TMQZl.png)
-![openid application manage](https://i.imgur.com/pG8nEZg.png)
+![user profile page](https://i.imgur.com/cLk3jce.png)
+![openid application manage](https://i.imgur.com/Du0YFZj.png)
 
 ## 目录结构
 
