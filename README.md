@@ -4,6 +4,15 @@
 
 这是一个 Typescript + Kubernetes 测试项目，其实现了最基本的 OpenID Connect 协议，并提供了一个简单的用户中心/管理页面。
 
+## Pics
+
+![user center home page](https://i.imgur.com/UQQzTX7.png)
+![user register page](https://i.imgur.com/C5qjU15.png)
+![user login page](https://i.imgur.com/tTQSC4L.png)
+![user authorize page](https://i.imgur.com/FaKIrzX.png)
+![user profile page](https://i.imgur.com/L7TMQZl.png)
+![openid application manage](https://i.imgur.com/pG8nEZg.png)
+
 ## 目录结构
 
 - `deploy` -- 部署相关文件
